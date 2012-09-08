@@ -15,16 +15,18 @@ deploy_branch  = "gh-pages"
 
 ## -- Misc Configs -- ##
 
-public_dir      = "public"    # compiled site directory
-source_dir      = "source"    # source file directory
-blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
-deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
-stash_dir       = "_stash"    # directory to stash posts for speedy generation
-posts_dir       = "_posts"    # directory for blog files
-themes_dir      = ".themes"   # directory for blog files
+public_dir      = "../../public"    # compiled site directory
+source_dir      = "../../octopress/source"    # source file directory
+blog_index_dir  = '../../octopress/source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
+deploy_dir      = "../../octopress/_deploy"   # deploy directory (for Github pages deployment)
+stash_dir       = "../../octopress/_stash"    # directory to stash posts for speedy generation
+posts_dir       = "../../octopress/posts"    # directory for blog files
+themes_dir      = "../../octopress/.themes"   # directory for blog files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
+
+config_yml_file = "../../octopress/_config.yml"   # location of the _config.yml file
 
 
 desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
@@ -281,11 +283,11 @@ task :set_root_dir, :dir do |t, args|
     File.open('config.rb', 'w') do |f|
       f.write compass_config
     end
-    jekyll_config = IO.read('_config.yml')
+    jekyll_config = IO.read(config_yml_file)
     jekyll_config.sub!(/^destination:.+$/, "destination: public#{dir}")
     jekyll_config.sub!(/^subscribe_rss:\s*\/.+$/, "subscribe_rss: #{dir}/atom.xml")
     jekyll_config.sub!(/^root:.*$/, "root: /#{dir.sub(/^\//, '')}")
-    File.open('_config.yml', 'w') do |f|
+    File.open(config_yml_file, 'w') do |f|
       f.write jekyll_config
     end
     rm_rf public_dir
@@ -326,9 +328,9 @@ task :setup_github_pages, :repo do |t, args|
   end
   url = "http://#{user}.github.com"
   url += "/#{project}" unless project == ''
-  jekyll_config = IO.read('_config.yml')
+  jekyll_config = IO.read(config_yml_file)
   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
-  File.open('_config.yml', 'w') do |f|
+  File.open(config_yml_file, 'w') do |f|
     f.write jekyll_config
   end
   rm_rf deploy_dir
