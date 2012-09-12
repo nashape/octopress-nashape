@@ -61,9 +61,9 @@ default_asides: [asides/recent_posts.html, asides/twitter.html, asides/github.ht
 github_user: nashape
 github_repo_count: 7
 github_show_profile_link: true
-github_skip_forks: false
+github_skip_forks: true
 # comma delimited list of repos to be skipped. repo,repo,repo 
-github_skip_repos:
+github_skip_repos: octopress,octopress-nashape,lithium,li3_ruckusing_migrations,ruckusing-migrations
 
 # Twitter
 twitter_user: nashape
