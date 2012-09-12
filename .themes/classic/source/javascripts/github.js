@@ -30,15 +30,16 @@ var github = (function(){
 
           if (options.count) { repos.splice(options.count); }
           skips = options.skip_repos.split(',');
+          var display_repos = new Array();
           if(skips.length > 0){
             for(var i=0; i < repos.length; i++){
-                if(skips.indexOf(repos[i].name) >= 0){
-                    repos.splice(i,1);
+                if(skips.indexOf(repos[i].name) < 0){
+                    display_repos.push(repos[i]);
                 }
             }
           }
 
-          render(options.target, repos);
+          render(options.target, display_repos);
         }
       });
     }
